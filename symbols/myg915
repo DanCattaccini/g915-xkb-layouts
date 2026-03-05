@@ -48,95 +48,76 @@ xkb_symbols "g915_intl_prog" {
 //    PT + Spanish ¿¡ + German äöüß + Math + Editorial typography
 // ------------------------------------------------------------
 partial alphanumeric_keys
-xkb_symbols "g915_altgr_deadless_plus_power" {
+xkb_symbols "g915_altgr_deadless_plus_power_v2" {
 
-    name[Group1]= "US AltGr Deadless+ (PT/ES/DE + Math + Editorial) - G915";
+    name[Group1]= "US AltGr Deadless+ (PT/ES/DE + Math + Editorial v2) - G915";
 
+    // Base US (ANSI)
     include "us"
 
-    // --- Dead keys ONLY on AltGr (keeps coding friction-free) ---
-    // Normal: ` ~ ' " ^ behave as in US
-    // AltGr:  dead versions
+    // Ensure Right Alt is AltGr (Level3 shift)
+    include "level3(ralt_switch)"
+
+    // ---- Dead keys ONLY on AltGr (coding stays clean) ----
+    // ` / ~
     key <TLDE> { [ grave, asciitilde, dead_grave, dead_tilde ] };
+    // ^ on Shift+6, dead_circumflex on AltGr+6
     key <AE06> { [ 6, asciicircum, dead_circumflex, dead_circumflex ] };
+    // ' and " normal; dead_acute and dead_diaeresis only on AltGr
     key <AC11> { [ apostrophe, quotedbl, dead_acute, dead_diaeresis ] };
 
-    // --- Portuguese (keep this invariant) ---
-    // Cedilla MUST be AltGr+C
+    // ---- Portuguese (must keep) ----
+    // AltGr + C = ç / Ç
     key <AB03> { [ c, C, ccedilla, Ccedilla ] };
 
-    // Acute vowels (PT/ES/FR baseline)
-    // NOTE: we dedicate AltGr on vowels to language layer (not German umlauts here).
+    // Acute vowels on AltGr (fast PT)
     key <AC01> { [ a, A, aacute, Aacute ] };
     key <AD03> { [ e, E, eacute, Eacute ] };
     key <AD08> { [ i, I, iacute, Iacute ] };
     key <AD09> { [ o, O, oacute, Oacute ] };
     key <AD07> { [ u, U, uacute, Uacute ] };
 
-    // Nasal vowels (PT) via explicit dead_tilde on AltGr+`~` then vowel:
-    // AltGr+`~` then a -> ã ; AltGr+`~` then o -> õ
-    // (We keep AltGr+N for ñ — Spanish)
-    key <AB06> { [ n, N, ntilde, Ntilde ] };   // AltGr+N = ñ / Ñ
+    // For ã/õ: use AltGr+Shift+` (dead_tilde) then a/o -> ã/õ
 
-    // --- Spanish inverted punctuation ---
-    key <AB10> { [ slash, question, questiondown, exclamdown ] };  // AltGr+/ = ¿ ; Shift+AltGr+/ = ¡
+    // ---- Spanish ----
+    // AltGr+/ = ¿ ; Shift+AltGr+/ = ¡
+    key <AB10> { [ slash, question, questiondown, exclamdown ] };
 
-    // --- German layer (choose ergonomic keys that won't fight PT) ---
-    // Put umlauts on AltGr+W/A/S (common EurKEY-style ergonomics) and ß on AltGr+S (home-row)
-    // - AltGr+W = ä, Shift+AltGr+W = Ä
-    // - AltGr+A already used for á; keep German accessible elsewhere:
-    key <AD02> { [ w, W, adiaeresis, Adiaeresis ] };  // ä/Ä
+    // ---- German (avoid conflicts with PT acute vowels) ----
+    // Umlauts on AltGr+W/P/Y and ß on AltGr+S
+    key <AD02> { [ w, W, adiaeresis, Adiaeresis ] }; // ä Ä
+    key <AD10> { [ p, P, odiaeresis, Odiaeresis ] }; // ö Ö
+    key <AD06> { [ y, Y, udiaeresis, Udiaeresis ] }; // ü Ü
+    key <AC02> { [ s, S, ssharp, U1E9E ] };          // ß ẞ
 
-    // - AltGr+E would conflict with é; so map ö/Ö to AltGr+P
-    key <AD10> { [ p, P, odiaeresis, Odiaeresis ] };  // ö/Ö
-
-    // - Map ü/Ü to AltGr+Y
-    key <AD06> { [ y, Y, udiaeresis, Udiaeresis ] };  // ü/Ü
-
-    // ß / ẞ on AltGr+S
-    key <AC02> { [ s, S, ssharp, U1E9E ] };          // ß / ẞ
-
-    // --- Editorial typography (quotes, nbsp, dashes, ellipsis) ---
-    // Non-breaking space
+    // ---- Editorial (do NOT steal accent keys) ----
+    // NBSP
     key <SPCE> { [ space, space, nobreakspace, nobreakspace ] };
 
-    // Smart quotes:
-    // AltGr+'  -> ’  (right single quotation mark)
-    // AltGr+"  -> ”  (right double quotation mark)
-    // Shift+AltGr+" -> “ (left double quotation mark)
-    // Shift+AltGr+' -> ‘ (left single quotation mark)
-    key <AC11> { [ apostrophe, quotedbl, U2019, U201D ] };
-    key <AC10> { [ semicolon, colon, U2018, U201C ] }; // ergonomic: AltGr+; = ‘ and AltGr+Shift+; = “ (optional companion)
+    // Smart quotes placed on AltGr+; and AltGr+Shift+; (safe)
+    // AltGr+;  = ‘  | Shift+AltGr+; = “
+    // AltGr+:  = ’  | Shift+AltGr+: = ”
+    key <AC10> { [ semicolon, colon, U2018, U201C ] }; // ‘ “
+    // Put the closing quotes on AltGr+L (safe + ergonomic)
+    // AltGr+L = ’ | Shift+AltGr+L = ”
+    key <AC09> { [ l, L, U2019, U201D ] };
 
-    // En/em dashes on AltGr+-
-    key <AE11> { [ minus, underscore, endash, emdash ] };
+    // Dashes & ellipsis
+    key <AE11> { [ minus, underscore, endash, emdash ] };          // – —
+    key <AB09> { [ period, greater, ellipsis, periodcentered ] };  // … ·
 
-    // Ellipsis on AltGr+.
-    key <AB09> { [ period, greater, ellipsis, periodcentered ] };
+    // ---- Currency ----
+    key <AE05> { [ 5, percent, EuroSign, EuroSign ] };  // €
+    key <AE04> { [ 4, dollar, cent, sterling ] };       // ¢ £
 
-    // --- Currency ---
-    key <AE05> { [ 5, percent, EuroSign, EuroSign ] };
-    key <AE04> { [ 4, dollar, cent, sterling ] };
-
-    // --- Math/engineering helpers ---
-    // ≠ and ± on AltGr+=
-    key <AE12> { [ equal, plus, notequal, plusminus ] };
-
-    // ≤ ≥ on AltGr+[ ]
-    key <AD11> { [ bracketleft, braceleft, lessthanequal, leftarrow ] };
-    key <AD12> { [ bracketright, braceright, greaterthanequal, rightarrow ] };
-
-    // × ÷ on AltGr+,
-    key <AB08> { [ comma, less, multiply, division ] };
-
-    // √ on AltGr+\
-    key <BKSL> { [ backslash, bar, squareroot, logicalor ] };
-
-    // ≈ on AltGr+F (keeps P reserved for ö)
-    key <AC04> { [ f, F, approxeq, function ] };
-
-    // ∞ and ∫ on AltGr+I
-    key <AD08> { [ i, I, infinity, integral ] };
+    // ---- Math / Engineering ----
+    key <AE12> { [ equal, plus, notequal, plusminus ] };            // ≠ ±
+    key <AD11> { [ bracketleft, braceleft, lessthanequal, leftarrow ] };   // ≤ ←
+    key <AD12> { [ bracketright, braceright, greaterthanequal, rightarrow ] }; // ≥ →
+    key <AB08> { [ comma, less, multiply, division ] };             // × ÷
+    key <BKSL> { [ backslash, bar, squareroot, logicalor ] };       // √ ∨
+    key <AC04> { [ f, F, approxeq, function ] };                    // ≈ ƒ
+    key <AD08> { [ i, I, infinity, integral ] };                    // ∞ ∫
 };
 
 // ------------------------------------------------------------
