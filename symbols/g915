@@ -8,8 +8,6 @@
 // - Provide PT (ç, áéíóú, dead accents on AltGr), ES (¿¡), DE (äöüß),
 //   Math + Editorial (power variant)
 
-default partial alphanumeric_keys modifier_keys
-
 // ------------------------------------------------------------
 // Variant: intl
 // Classic US-International behavior + hard guarantee AltGr+C = ç
