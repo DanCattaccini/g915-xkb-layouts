@@ -9,7 +9,7 @@ Custom XKB keyboard layouts for the **Logitech G915 TKL** (ANSI US physical layo
 - **Spanish**: ¿ ¡ (AltGr+/), ñ (AltGr+N).
 - **German**: ä ö ü ß on ergonomic keys (W, P, Y, S).
 - **Math/engineering** (power variant): ≠ ± ≤ ≥ × ÷ √ ≈ and more.
-- **No dead keys on Base** — `' " \` ~ ^` type normally; dead accents only when you hold AltGr.
+- **No dead keys on Base** — `` ' " ` ~ ^ `` type normally; dead accents only when you hold AltGr.
 
 ## Variants
 

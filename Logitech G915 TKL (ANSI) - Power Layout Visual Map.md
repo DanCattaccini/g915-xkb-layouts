@@ -11,7 +11,7 @@ Legend:
 - S+AltGr = Shift + Right Alt
 
 ## Quick principles
-- Coding punctuation stays normal: `' " ` ~ ^` are NOT dead keys on Base/Shift.
+- Coding punctuation stays normal: `` ' " ` ~ ^ `` are NOT dead keys on Base/Shift.
 - Dead accents exist only on AltGr:
   - AltGr+`  -> dead_grave
   - AltGr+Shift+` -> dead_tilde
