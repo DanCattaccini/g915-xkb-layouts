@@ -1,0 +1,119 @@
+// Logitech G915 TKL (ANSI US physical) - XKB layout
+// Layout: g915
+// Variants: intl, prog, power, eurkey
+//
+// Philosophy:
+// - Keep Base/Shift = US (dev-friendly)
+// - Use AltGr (Right Alt) as Level3
+// - Provide PT (ç, áéíóú, dead accents on AltGr), ES (¿¡), DE (äöüß),
+//   Math + Editorial (power variant)
+
+default partial alphanumeric_keys modifier_keys
+
+// ------------------------------------------------------------
+// Variant: intl
+// Classic US-International behavior + hard guarantee AltGr+C = ç
+// ------------------------------------------------------------
+partial alphanumeric_keys
+xkb_symbols "intl" {
+    name[Group1]= "G915: US-Intl (classic) + AltGr+C=ç";
+
+    include "us(intl)"
+    include "level3(ralt_switch)"
+
+    // Force cedilla on AltGr+C even if intl variant differs
+    key <AB03> { [ c, C, ccedilla, Ccedilla ] };
+};
+
+// ------------------------------------------------------------
+// Variant: prog
+// Deadless-by-default for coding; accents exist ONLY on AltGr.
+// Adds: PT fast (áéíóú), ES (¿¡), DE (äöüß, ergonomic keys).
+// ------------------------------------------------------------
+partial alphanumeric_keys
+xkb_symbols "prog" {
+    name[Group1]= "G915: US AltGr-deadless (dev) + PT/ES/DE";
+
+    include "us(basic)"
+    include "level3(ralt_switch)"
+
+    // Dead keys ONLY on AltGr (Base stays normal)
+    // ` / ~
+    key <TLDE> { [ grave, asciitilde, dead_grave, dead_tilde ] };
+    // ^ normal on Shift+6; dead_circumflex on AltGr+6
+    key <AE06> { [ 6, asciicircum, dead_circumflex, dead_circumflex ] };
+    // ' and " normal; dead_acute and dead_diaeresis only on AltGr
+    key <AC11> { [ apostrophe, quotedbl, dead_acute, dead_diaeresis ] };
+
+    // Portuguese (hard requirement)
+    key <AB03> { [ c, C, ccedilla, Ccedilla ] };          // AltGr+C = ç
+    key <AC01> { [ a, A, aacute, Aacute ] };              // AltGr+A = á
+    key <AD03> { [ e, E, eacute, Eacute ] };              // AltGr+E = é
+    key <AD08> { [ i, I, iacute, Iacute ] };              // AltGr+I = í
+    key <AD09> { [ o, O, oacute, Oacute ] };              // AltGr+O = ó
+    key <AD07> { [ u, U, uacute, Uacute ] };              // AltGr+U = ú
+    // ã/õ via dead_tilde: Shift+AltGr+` then a/o
+
+    // Spanish inverted punctuation
+    key <AB10> { [ slash, question, questiondown, exclamdown ] };  // AltGr+/ = ¿, Shift+AltGr+/ = ¡
+
+    // German (avoid conflicts with PT vowels; use mnemonic keys)
+    key <AD02> { [ w, W, adiaeresis, Adiaeresis ] };      // AltGr+W = ä
+    key <AD10> { [ p, P, odiaeresis, Odiaeresis ] };      // AltGr+P = ö
+    key <AD06> { [ y, Y, udiaeresis, Udiaeresis ] };      // AltGr+Y = ü
+    key <AC02> { [ s, S, ssharp, U1E9E ] };               // AltGr+S = ß, Shift+AltGr+S = ẞ
+
+    // Optional Spanish ñ (useful and doesn't fight PT)
+    key <AB06> { [ n, N, ntilde, Ntilde ] };              // AltGr+N = ñ
+};
+
+// ------------------------------------------------------------
+// Variant: power
+// Everything from prog + Math + Editorial typography.
+// Still dev-safe: no dead keys on Base.
+// ------------------------------------------------------------
+partial alphanumeric_keys
+xkb_symbols "power" {
+    name[Group1]= "G915: POWER (AltGr-deadless) PT/ES/DE + Math + Editorial";
+
+    include "g915(prog)"  // build on top of prog
+
+    // Editorial / Typography (do NOT steal accent keys)
+    key <SPCE> { [ space, space, nobreakspace, nobreakspace ] };   // AltGr+Space = NBSP
+    key <AE11> { [ minus, underscore, endash, emdash ] };          // AltGr+- = – ; Shift+AltGr+- = —
+    key <AB09> { [ period, greater, ellipsis, periodcentered ] };  // AltGr+. = … ; Shift+AltGr+. = ·
+
+    // Smart quotes: ; and L (apostrophe key keeps dead_acute/dead_diaeresis from prog)
+    // AltGr+;  = ‘ ; Shift+AltGr+; = “
+    // AltGr+L  = ’ ; Shift+AltGr+L = ”
+    key <AC10> { [ semicolon, colon, U2018, U201C ] };             // ‘ “
+    key <AC09> { [ l, L, U2019, U201D ] };                         // ’ ”
+
+    // Currency
+    key <AE05> { [ 5, percent, EuroSign, EuroSign ] };             // AltGr+5 = €
+    key <AE04> { [ 4, dollar, cent, sterling ] };                  // AltGr+4 = ¢ ; Shift+AltGr+4 = £
+
+    // Math / Engineering
+    key <AE12> { [ equal, plus, notequal, plusminus ] };           // AltGr+= = ≠ ; Shift+AltGr+= = ±
+    key <AD11> { [ bracketleft, braceleft, lessthanequal, leftarrow ] };   // AltGr+[ = ≤ ; Shift+AltGr+[ = ←
+    key <AD12> { [ bracketright, braceright, greaterthanequal, rightarrow ] }; // AltGr+] = ≥ ; Shift+AltGr+] = →
+    key <AB08> { [ comma, less, multiply, division ] };            // AltGr+, = × ; Shift+AltGr+, = ÷
+    key <BKSL> { [ backslash, bar, squareroot, logicalor ] };      // AltGr+\ = √ ; Shift+AltGr+\ = ∨
+    key <AC04> { [ f, F, approxeq, function ] };                   // AltGr+F = ≈ ; Shift+AltGr+F = ƒ
+    // I key keeps í/Í from prog (no ∞/∫ in power)
+};
+
+// ------------------------------------------------------------
+// Variant: eurkey
+// EurKEY-ish vibe: US base + AltGr international, but lighter than power.
+// ------------------------------------------------------------
+partial alphanumeric_keys
+xkb_symbols "eurkey" {
+    name[Group1]= "G915: EurKEY-style (light)";
+
+    include "g915(prog)"
+
+    // Small extras people expect in EurKEY-ish setups
+    key <AE11> { [ minus, underscore, endash, emdash ] };          // – —
+    key <AE05> { [ 5, percent, EuroSign, EuroSign ] };             // €
+};

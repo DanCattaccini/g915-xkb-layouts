@@ -1,97 +1,52 @@
 # Logitech G915 TKL (ANSI) – XKB Layouts for Fedora/Linux
 
-Custom keyboard layouts for the Logitech G915 TKL (ANSI US physical layout) using XKB.
+Custom XKB keyboard layouts for the **Logitech G915 TKL** (ANSI US physical layout). Base and Shift stay standard US so coding is friction-free; all extra characters live on **AltGr** (Right Alt).
 
 ## Why
-- Keep **US ANSI physical mapping** (matches key legends on the G915 TKL US)
-- Type **Portuguese** fast (ç, accents)
-- Add **Spanish** (¿ ¡)
-- Add **German** (ä ö ü ß)
-- Provide **math/engineering** symbols
-- Avoid classic US-Intl dead-key friction while programming
 
----
+- **US ANSI** base matches the key legends on the G915 TKL US.
+- **Portuguese**: ç (AltGr+C), áéíóú on vowels, ã/õ via dead tilde.
+- **Spanish**: ¿ ¡ (AltGr+/), ñ (AltGr+N).
+- **German**: ä ö ü ß on ergonomic keys (W, P, Y, S).
+- **Math/engineering** (power variant): ≠ ± ≤ ≥ × ÷ √ ≈ and more.
+- **No dead keys on Base** — `' " \` ~ ^` type normally; dead accents only when you hold AltGr.
+
+## Variants
+
+| Variant | Description |
+|--------|-------------|
+| `intl` | Classic US-International behaviour + AltGr+C = ç |
+| `prog` | Deadless base, PT/ES/DE on AltGr (dev-first) |
+| `power` | prog + math symbols + editorial typography **(recommended)** |
+| `eurkey` | EurKEY-style, lighter than power |
 
 ## Install
 
 ```bash
-git clone <your_repo_url>
-cd g915-xkb-layouts
+chmod +x install.sh uninstall.sh rebuild.sh
 ./install.sh
+```
 
----
-## How to install
-setxkbmap -layout myg915 -variant g915_altgr_deadless_plus_power
+Then add the layout in your desktop:
 
-# If don't apply
-sudo rm -rf /var/lib/xkb/*
-logout
-login
+- **KDE (Wayland)**: System Settings → Input Devices → Keyboard → Layouts → Add → **Logitech G915 TKL (ANSI)** → choose variant (e.g. **power**).
+- **Quick test (X11/XWayland)**: `setxkbmap -layout g915 -variant power`
 
+If the new layout does not appear, clear the XKB cache and log out/in:
 
+```bash
+./rebuild.sh
+# then logout and login
+```
 
----
+## Uninstall
 
-## `diagrams/keyboard-layout.md` (complete visual diagram)
+```bash
+./uninstall.sh
+```
 
-> Este diagrama mostra: **Base / Shift / AltGr / Shift+AltGr** para as teclas mais relevantes (ANSI).  
-> Para não virar um livro, eu detalho **tudo que foge do US padrão** + mostro a camada AltGr completa.
+Log out and log in (or reboot) so the system stops using the layout.
 
-```md
-# G915 TKL (ANSI) – Visual Map (Power Layout)
+## Full key map (power variant)
 
-Legend:
-- Base = normal
-- Shift = with Shift
-- AGr = AltGr (Right Alt)
-- S+AGr = Shift+AltGr
-
-## Top row (numbers)
-` 1 2 3 4 5 6 7 8 9 0 - =
-Base:     ` 1 2 3 4 5 6 7 8 9 0 - =
-Shift:    ~ ! @ # $ % ^ & * ( ) _ +
-AGr:      dead_grave   . .  £ € dead_circumflex . . . . – ≠
-S+AGr:    dead_tilde   . .  . . € dead_circumflex . . . . — ±
-
-Notes:
-- AltGr+` gives dead_grave; Shift+AltGr+` gives dead_tilde
-- AltGr+- gives en-dash, Shift+AltGr+- gives em-dash
-- AltGr+= gives ≠, Shift+AltGr+= gives ±
-- AltGr+4 gives ¢, Shift+AltGr+4 gives £
-- AltGr+5 gives €
-
-## QWERTY row
-Q W E R T Y U I O P [ ] \
-AGr changes:
-- W -> ä (S+AGr: Ä)
-- Y -> ü (S+AGr: Ü)
-- P -> ö (S+AGr: Ö)
-- [ -> ≤ (S+AGr: ←)
-- ] -> ≥ (S+AGr: →)
-- \ -> √ (S+AGr: logical OR)
-
-## Home row
-A S D F G H J K L ; '
-AGr changes:
-- A -> á (S+AGr: Á)
-- S -> ß (S+AGr: ẞ)
-- E -> é (S+AGr: É) [on E key]
-- I -> í / ∞, ∫ on i (AGr: ∞ ; S+AGr: ∫)
-- O -> ó (S+AGr: Ó)
-- U -> ú (S+AGr: Ú)
-- F -> ≈ (S+AGr: function symbol)
-- ; -> ‘ (S+AGr: “)
-- ' -> ’ (S+AGr: ”) plus AltGr dead keys: dead_acute / dead_diaeresis
-
-## Bottom row
-Z X C V B N M , . /
-AGr changes:
-- C -> ç (S+AGr: Ç)
-- N -> ñ (S+AGr: Ñ)
-- , -> × (S+AGr: ÷)
-- . -> … (S+AGr: ·)
-- / -> ¿ (S+AGr: ¡)
-
-## Space
-AGr:
-- Space -> NBSP (no-break space)
+See **[Logitech G915 TKL (ANSI) - Power Layout Visual Map.md](Logitech%20G915%20TKL%20(ANSI)%20-%20Power%20Layout%20Visual%20Map.md)** for the complete AltGr layer, ASCII diagram, and sanity checklist.

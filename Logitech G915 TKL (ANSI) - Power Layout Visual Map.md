@@ -1,5 +1,5 @@
 # Logitech G915 TKL (ANSI) — Power Layout Visual Map
-Variant: `g915_altgr_deadless_plus_power`
+Layout: **g915**, variant: **power**
 
 This layout is **US ANSI** on Base/Shift (no surprises for coding).
 All additions live on **AltGr** (Right Alt), keeping the default layer deadless.
@@ -46,12 +46,13 @@ Space: space
 - S + AltGr + C          = Ç
 - AltGr + A/E/I/O/U      = á/é/í/ó/ú
 - S + AltGr + A/E/I/O/U  = Á/É/Í/Ó/Ú
-(For ã/õ use the AltGr tilde dead key: S+AltGr+` then a/o.)
+- For ã/õ use the AltGr tilde dead key: S+AltGr+` then a/o.
 
 ### Spanish
 - AltGr + /              = ¿
 - S + AltGr + /          = ¡
-(Top priority: fast inverted punctuation.)
+- AltGr + N              = ñ
+- S + AltGr + N          = Ñ
 
 ### German
 To avoid conflicts with Portuguese acute vowels, umlauts are on nearby mnemonic keys:
@@ -66,10 +67,11 @@ To avoid conflicts with Portuguese acute vowels, umlauts are on nearby mnemonic 
 
 ### Editorial / Typography
 - AltGr + Space          = NBSP (no-break space)
-- AltGr + '              = ’  (right single quote)  [NOTE: on this key we also provide dead_acute via AltGr—see “accents”]
-- S + AltGr + '          = ”  (right double quote) [and dead_diaeresis available via AltGr shift path]
 - AltGr + ;              = ‘  (left single quote)
 - S + AltGr + ;          = “  (left double quote)
+- AltGr + L              = ’  (right single quote)
+- S + AltGr + L          = ”  (right double quote)
+- *(The apostrophe key ' keeps dead_acute / dead_diaeresis from prog; smart quotes are on ; and L.)*
 - AltGr + -              = –  (en dash)
 - S + AltGr + -          = —  (em dash)
 - AltGr + .              = …  (ellipsis)
@@ -84,15 +86,15 @@ To avoid conflicts with Portuguese acute vowels, umlauts are on nearby mnemonic 
 - AltGr + =              = ≠
 - S + AltGr + =          = ±
 - AltGr + [              = ≤
+- S + AltGr + [          = ←
 - AltGr + ]              = ≥
+- S + AltGr + ]          = →
 - AltGr + ,              = ×
 - S + AltGr + ,          = ÷
 - AltGr + \              = √
+- S + AltGr + \          = ∨  (logical or)
 - AltGr + F              = ≈
-- AltGr + I              = ∞
-- S + AltGr + I          = ∫
-- AltGr + [              = ≤   (also provides ← on S+AltGr+[ in this build)
-- AltGr + ]              = ≥   (also provides → on S+AltGr+] in this build)
+- S + AltGr + F          = ƒ
 
 ---
 
@@ -100,18 +102,20 @@ To avoid conflicts with Portuguese acute vowels, umlauts are on nearby mnemonic 
 
 Top row:
 `  1 2 3 4 5 6 7 8 9 0  -  =
-AGr:`dead_grave`      ¢ €         –  ≠
-S+AGr:`dead_tilde`    £ €         —  ±
+AGr: dead_grave      ¢ €         –  ≠
+S+AGr: dead_tilde    £ €         —  ±
 
 QWERTY row:
 q  w   e  r t y   u i o p   [  ]   \
-AGr:   ä          ü         ö   ≤  ≥   √
-S+AGr: Ä          Ü         Ö   ←  →   ∨
+AGr:   ä  é      ü  ú  í  ó  ö   ≤  ≥   √
+S+AGr: Ä  É      Ü  Ú  Í  Ó  Ö   ←  →   ∨
 
 Home row:
 a  s   d f g h j k l  ;   '
-AGr: á  ß     ≈         ‘   (dead_acute / ’)
-S+AGr:Á  ẞ     ƒ         “   (dead_diaeresis / ”)
+AGr: á  ß     ≈         ‘   dead_acute
+S+AGr:Á  ẞ     ƒ         “   dead_diaeresis
+
+*(Smart quotes: ; = ‘ “, L = ’ ”. Apostrophe key = dead accents only.)*
 
 Bottom row:
 z x c v b n  m  ,  .  /
@@ -124,15 +128,8 @@ AGr: NBSP
 ---
 
 ## Sanity test checklist
-1) Code:
-- type `'hello'` and `"hello"` and `~/.config` without any “dead key hang”
-2) Portuguese:
-- AltGr+c => ç
-- AltGr+a => á
-- S+AltGr+` then a => ã
-3) Spanish:
-- AltGr+/ => ¿
-4) German:
-- AltGr+w => ä ; AltGr+s => ß
-5) Math:
-- AltGr+= => ≠ ; AltGr+\ => √
+1) **Code**: type `'hello'` and `"hello"` and `~/.config` without any “dead key hang”.
+2) **Portuguese**: AltGr+c => ç; AltGr+a => á; AltGr+i => í; S+AltGr+` then a => ã.
+3) **Spanish**: AltGr+/ => ¿.
+4) **German**: AltGr+w => ä; AltGr+s => ß.
+5) **Math**: AltGr+= => ≠; AltGr+\ => √.
